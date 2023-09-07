@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
 import 'package:get/get.dart';
-import 'package:getxpractice/app/modules/onboarding2/controllers/onboarding2_controller.dart';
+import 'package:getxpractice/app/modules/onboarding/controllers/onboarding_controller.dart';
 
 class FirstView extends GetView {
   const FirstView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    var controller = Get.put(Onboarding2Controller());
+    var controller = Get.put(OnboardingController());
     return Scaffold(
       appBar: AppBar(
         title: const Text('FirstView'),
@@ -24,11 +24,7 @@ class FirstView extends GetView {
           ),
           ElevatedButton(
             onPressed: () {
-              controller.nextpage(
-              
-              );
-            
-
+              controller.nextPage();
             },
             child: const Text("Next"),
           )

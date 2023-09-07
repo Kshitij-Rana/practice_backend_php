@@ -102,7 +102,7 @@ class RegisterView extends GetView<RegisterController> {
                 const SizedBox(
                   height: 30,
                 ),
-                DropdownButton(
+                DropdownButtonFormField(
                   items: const [
                     DropdownMenuItem(
                         value: "admin",

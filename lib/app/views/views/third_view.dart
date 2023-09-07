@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:getxpractice/app/modules/onboarding2/controllers/onboarding2_controller.dart';
+import 'package:getxpractice/app/modules/onboarding/controllers/onboarding_controller.dart';
 
 class ThirdView extends GetView {
   const ThirdView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    var controller = Get.put(Onboarding2Controller());
+    var controller = Get.put(OnboardingController());
     return Scaffold(
       appBar: AppBar(
         title: const Text('ThirdView'),
@@ -22,7 +22,7 @@ class ThirdView extends GetView {
               style: const TextStyle(fontSize: 20),
             ),
             ElevatedButton(
-                onPressed: controller.nextpage, child: const Text("Okay"))
+                onPressed: controller.nextPage, child: const Text("Okay"))
           ],
         ),
       ),

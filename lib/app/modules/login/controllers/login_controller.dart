@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:getxpractice/app/constants.dart';
+import 'package:getxpractice/app/components/constants.dart';
 import 'package:getxpractice/app/routes/app_pages.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -34,8 +34,14 @@ class LoginController extends GetxController {
 
         var result = jsonDecode(response.body);
         if (result['success']) {
-          prefs.setString('token', result['token']);
-          Get.offAllNamed(Routes.HOME);
+          await prefs.setString('role', result['role']);
+          await prefs.setString('token', result['token']);
+          if (result['role'] == 'admin') {
+            Get.offAllNamed(Routes.ADMIN_MAIN);
+          } else {
+            Get.offAllNamed(Routes.HOME);
+          }
+
           Get.showSnackbar(GetSnackBar(
             backgroundColor: Colors.green,
             message: result['message'],

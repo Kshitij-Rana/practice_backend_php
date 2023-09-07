@@ -2,10 +2,9 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:getxpractice/app/routes/app_pages.dart';
 import 'package:http/http.dart' as http;
 
-import '../../../constants.dart';
+import '../../../components/constants.dart';
 
 class RegisterController extends GetxController {
   var dropdownValue;
@@ -32,7 +31,7 @@ class RegisterController extends GetxController {
         var result = jsonDecode(response.body);
 
         if (result['success']) {
-          Get.toNamed(Routes.LOGIN);
+          Get.back();
           Get.showSnackbar(GetSnackBar(
               backgroundColor: Colors.green,
               message: result['message'],

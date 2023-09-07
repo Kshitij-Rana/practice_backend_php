@@ -1,16 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:getxpractice/app/components/adCategoryPopup.dart';
 
-class Onboarding2Controller extends GetxController {
-  //TODO: Implement Onboarding2Controller
+class AdminCategoryController extends GetxController {
+  //TODO: Implement AdminCategoryController
 
   final count = 0.obs;
-  PageController pageController = PageController();
-  void nextpage() {
-    pageController.nextPage(
-        duration: Duration(seconds: 1), curve: Curves.elasticInOut);
-  }
-
   @override
   void onInit() {
     super.onInit();
@@ -19,6 +14,13 @@ class Onboarding2Controller extends GetxController {
   @override
   void onReady() {
     super.onReady();
+  }
+
+  void onCategoryAdd() {
+    showDialog(
+      context: Get.context!,
+      builder: (context) => const addCategoryPopup(),
+    );
   }
 
   @override
