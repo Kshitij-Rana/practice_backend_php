@@ -1,27 +1,27 @@
 <?php
-include './helpers/dbconnection';
+include './helpers/dbconnection.php';
 global $conn;
-$sql = "Select * from products";
-$result = mysqli_query($conn,$sql);
-
-if ($result){
-    $products = [];
-    while ($response = mysqli_fetch_assoc($result)){
-        $products = $response;
-    }
+$sql = "Select * from product join category on category.category_id = product.category ";
+$result = mysqli_query($conn, $sql);
+$products = [];
+while ($response = mysqli_fetch_assoc($result)) {
+    $products[] = $response;
+}
+if ($result) {
     echo json_encode(
         array(
-            "status" => true,
+            "success" => true,
             "message" => "Products fetched successfully",
             "data" => $products
         )
-        );
-}else{
+    );
+} else {
     echo json_encode(
         array(
-            "status" => false,
+            "success" => false,
             "message" => "Something went wrong"
         )
-        );
+    );
 }
+
 ?>

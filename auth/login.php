@@ -14,6 +14,7 @@ if($num > 0){
     if($verify == 1){
         $accessToken = bin2hex(openssl_random_pseudo_bytes(16));
         $userID = $row['user_id'];
+        $role = $row['role'];
         $insertokensql = "INSERT INTO `personal_acess_token`( `token`, `user_id`) VALUES ('$accessToken','$userID')";
         $result = mysqli_query($conn,$insertokensql);
         if($result){
@@ -21,6 +22,7 @@ if($num > 0){
                 array(
                     "success" => true,
                     "token"=> $accessToken,
+                    "role" => $role,
                     "message" => "Logged in"
             )
                 );

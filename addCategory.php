@@ -2,10 +2,10 @@
 include './helpers/dbconnection.php';
 include './helpers/Authentication.php';
 
-if(isset($_POST['title']) && isset($_POST['token'])){
+if(isset($_POST['category_title']) && isset($_POST['token'])){
 
 global $conn;//uta ko function tancha
-$title=$_POST['title'];
+$title=$_POST['category_title'];
 $token=$_POST['token'];
 $checkAdmin = isAdmin($token);
 if (!$checkAdmin){
@@ -31,7 +31,7 @@ if($num > 0 ){
     );
     return;
 }else{
-    $Query = "INSERT INTO `category`( `title`) VALUES ('$title')";
+    $Query = "INSERT INTO `category`( `category_title`) VALUES ('$title')";
     $result = mysqli_query($conn,$Query);
     if($result){
         echo json_encode(
@@ -44,7 +44,7 @@ if($num > 0 ){
         echo json_encode(
             array(
                 "success" => false,
-                "message" => "tw gandu ho"
+                "message" => "Something went wrong"
 
             )
         );

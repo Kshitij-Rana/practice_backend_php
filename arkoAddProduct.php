@@ -1,63 +1,59 @@
 <?php
 include './helpers/dbconnection.php';
 include './helpers/authentication.php';
-if(
-    isset($_POST['title']) && isset($_POST['category']) && isset($_POST['price']) && isset($_POST['description']) && $_FILES['image'] && isset($_POST['token'])
-){
-    global $conn;
 
+global $conn;
+if(
+    isset($_POST['title']) && isset($_POST['category']) && isset($_POST['description']) && isset($_POST['price']) && isset($_POST['token']) && $_FILES['image']
+){
     $title = $_POST['title'];
     $category = $_POST['category'];
-    $price = $_POST['price'];
     $description = $_POST['description'];
+    $price = $_POST['price'];
     $token = $_POST['token'];
-
-    $checkAdmin = isAdmin($token);
-
-    if(!$checkAdmin){
-        echo json_encode(
-            array(
-                "success" => false,
-                "message" => "You are not authorized!"
-            )
-            );
-            die();
-    }
     $image = $_FILES['image']['name'];
     $image_tmp_name = $_FILES['image']['tmp_name'];
     $image_size = $_FILES['image']['size'];
 
-    if($image_size > 5000000){
+    $checkAdmin = isAdmin($token);
+    if (!$checkAdmin){
         echo json_encode(
             array(
                 "success" => false,
-                "message" => "Image size must be less than 5MB!"
+                "message" => "You are not authorized to add product."
             )
             );
             die();
     }
-    $image_new_name = time() . '_' . $image;
-    $upload_path = 'images/'.$image_new_name; 
+    if($image_size > 5000000){
+        echo json_encode(
+            array(
+                "success" => false,
+                "message" => "Sorry! You cannot upload file which size is more than 5MB"
+            )
+        );
+        die();
+    }
+    $image_new_name = time() . "_" . $image;
+    $upload_path = 'images/' . $image_new_name;
 
     if(!move_uploaded_file($image_tmp_name,$upload_path)){
         echo json_encode(
             array(
                 "success" => false,
-                "message" => "Image upload failed"
+                "message" => "Image not uploaded. Some issues found"
             )
             );
             die();
-
     }
-
     $sql = "INSERT INTO `product`(`title`, `category`, `description`, `price`,`image`) VALUES ('$title','$category','$description','$price','$upload_path')";
-    $result = mysqli_query($conn,$sql);
+    $result = mysqli_query($conn , $sql);
 
     if($result){
         echo json_encode(
             array(
                 "success" => true,
-                "message" => "Product added successfully!"
+                "message" => "Product added successfully"
             )
         );
     }else{
@@ -68,15 +64,14 @@ if(
             )
             );
     }
-
 }else{
     echo json_encode(
         array(
             "success" => false,
-            "message" => "Please fill all the fields",
-            "required fields" => "token, title,description,price,category,image"
+            "message" => "Please enter all the fields",
+            "required fields" => "token,title,description,category,price,image"
         )
-    );
+        );
 }
 
 ?>
